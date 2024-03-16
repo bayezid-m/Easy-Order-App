@@ -5,6 +5,7 @@ import './App.css';
 import DashBoard from './screens/DashBoard';
 import Login from './screens/Login';
 import Register from './screens/Register';
+import ItemInfo from './screens/ItemInfo';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path='/' element={<DashBoard />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/itemInfo/:id' element={<ItemInfo />} />
       </Routes>
     </BrowserRouter>
   )

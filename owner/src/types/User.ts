@@ -6,4 +6,5 @@ export interface User {
     password: string
     image: string
     role: string
+    status?: string
 }

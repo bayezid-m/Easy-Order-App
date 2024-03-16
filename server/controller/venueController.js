@@ -19,7 +19,6 @@ const createVenue = async (req, res) => {
     const image_url = "https://res.cloudinary.com/dv4j8hjqf/image/upload/v1689848305/" + req.body.image + ".jpg"
 
     const randomString = generateRandomString();
-    console.log(randomString);
 
 
     if (user.role === "owner") {
@@ -58,7 +57,7 @@ const getVenueById = async (req, res) => {
     const user = req.user;
     try {
         const venue = await Venue.findOne({owner: user.id})
-        return res.status(200).json({ status: "okay", venue: venue });
+        return res.status(200).json({ status: "okay", venueInfo: venue });
 
     } catch (error) {
         return res.status(500).json({ message: "Internal server error" });

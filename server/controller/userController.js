@@ -43,7 +43,7 @@ const loginUser = async (req, res) => {
         )
         return res.status(200).json({status: "okay", userInfo: user, token: token });
     } else {
-        return res.status(500).json({ error: error });
+        return res.status(500).json({status: "false", error: error });
     }
 }
 const getUser = async (req, res) => {
@@ -58,7 +58,6 @@ const updateUser = async (req, res) => {
         })
         return res.status(200).json({status: "update successful"})
     } catch (error) {
-        console.log(error)
         return res.status(500).json({ error: error });
     }
 }

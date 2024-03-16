@@ -20,6 +20,7 @@ const initialState: {
         password: '',
         image: '',
         role: '',
+        status: ''
     },
     newUser: {
         first_name: '',
@@ -67,15 +68,16 @@ export const login = createAsyncThunk(
 export const authenticate = createAsyncThunk(
     "authenticate",
     async () => {
+        const token = localStorage.getItem('token')
         try {
-            const authentication = await axios.get<{userData: User}>("http://localhost:4040/api/v1/user/getUser",
+            const authentication = await axios.get<User>("http://localhost:4040/api/v1/user/getUser",
                 {
                     headers: {
-                        'access-token': localStorage.getItem('token')
+                        'access-token': token
                     }
                 }
             )
-            return authentication.data.userData           
+            return authentication.data           
         }
         catch (e) {
             const error = e as AxiosError

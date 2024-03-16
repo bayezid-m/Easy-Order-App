@@ -77,7 +77,7 @@ const Register = () => {
     event.preventDefault();
 
     if (firstName === '' || email === '' || password === '' || rePassword === '') {
-      setErrorMessage('Please check all input');
+      setErrorMessage('Please check all inputs');
       errorHandler();
     }
     else if (email.includes('@') === false || email.includes('.') === false) {
