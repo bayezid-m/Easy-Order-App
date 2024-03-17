@@ -8,7 +8,7 @@ const addItem = async (req, res) => {
         try {
             const newItem = await Item.create({
                 name: req.body.name,
-                image: req.body.images,
+                image: req.body.image,
                 venue_id: req.body.venue_id,
                 price: req.body.price,
                 description: req.body.description

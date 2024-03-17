@@ -58,7 +58,7 @@ const AddItemModal: React.FC<ModalContentProps> = ({ open, onClose, venueId }) =
             console.log(imageSender);
             setFormData(prevData => ({
                 ...prevData,
-                images: [...prevData.image, response.data.secure_url]
+                image: [...prevData.image, response.data.secure_url]
               }));
         } catch (error) {
             console.log("Error occurred during user registration:", error);
@@ -73,7 +73,7 @@ const AddItemModal: React.FC<ModalContentProps> = ({ open, onClose, venueId }) =
 
     const handleSubmit = () => {
        const newFormData = { ...formData, venue_id: venueId }
-        console.log(newFormData.image)
+        console.log(newFormData)
         // Optional: Reset form fields after submission
         // const newFormData = { ...formData, image: imageSender }
         // console.log(newFormData)
