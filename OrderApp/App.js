@@ -8,19 +8,26 @@ import Register from './screens/Register';
 import Login from './screens/Login';
 import QrCoder from './screens/QrCoder';
 import AllRestaurant from './screens/AllRestaurant';
+import { UserProvider } from './components/UserProvider';
+import ProfileScreen from './screens/Profile';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Dashboard">
-        <Stack.Screen name="Dashboard" component={Dashboard} />
-        <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="scaner" component={QrCoder} />
-        <Stack.Screen name="AllRestaurant" component={AllRestaurant} />
-      </Stack.Navigator>
+      <UserProvider>
+        <Stack.Navigator initialRouteName="Dashboard">
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Scaner" component={QrCoder} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen name="AllRestaurant" component={AllRestaurant} />
+        </Stack.Navigator>
+      </UserProvider>
     </NavigationContainer>
   );
 }
+
+//npx react-native run-android
