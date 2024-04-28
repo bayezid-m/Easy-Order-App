@@ -6,11 +6,12 @@ require('dotenv').config()
 
 const port = process.env.PORT || 4040;
 //"http://localhost:4000"
-app.use(cors({
-    origin: ['http://localhost:8081', 'http://localhost:3000'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+// app.use(cors({
+//     origin: ['http://localhost:8081'],
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+// }));
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
@@ -18,12 +19,13 @@ app.use(express.urlencoded({ extended: true }));
 const userRouter = require("./router/userRoute")
 const venueRouter = require("./router/venueRoute")
 const itemRouter = require("./router/itemRouter")
+const orderRouter = require("./router/orderRouter")
 
 //using router inside app
 app.use("/api/v1/user", userRouter)
 app.use("/api/v1/venue", venueRouter)
 app.use("/api/v1/item", itemRouter)
-
+app.use("/api/v1/order", orderRouter)
 
 
 const mongoDbConnect = async () => {

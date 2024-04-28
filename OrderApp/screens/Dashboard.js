@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 // Dashboard.js
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Button, Aler, ScrollView, KeyboardAvoidingView, Platform } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Button, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Navbar from '../components/Navbar';
 import VenueCard from '../components/VenueCard';
@@ -13,10 +13,10 @@ export default function Dashboard({ navigation }) {
 
     const fetchVenues = async (searchQuery) => {
         try {
-            const response = await axios.get('http://192.168.0.22:4040/api/v1/venue/getVenue', {
+            const response = await axios.get('http://192.168.162.89:4040/api/v1/venue/getVenue', {
                 params: {
-                    search: searchQuery
-                }
+                    search: searchQuery,
+                },
             });
             if (response.data.status === 'okay') {
                 setVenues(response.data.venue);
@@ -39,19 +39,16 @@ export default function Dashboard({ navigation }) {
     useEffect(() => {
         //
         fetchVenues(inputText);
+        setInputText('');
     }, [inputText]);
 
     const [isScanning, setScanning] = useState(false);
 
-    // const handleSubmit = () => {
-    //     //e.preventDefault();
-    //     navigation.navigate('AllRestaurant', { submittedText: inputText })
-    // }
     return (
         <KeyboardAvoidingView
             style={{ flex: 1 }}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // Adjust behavior based on platform
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0} // Adjust vertical offset if needed
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
         >
             <View style={styles.container}>
                 <Navbar navigation={navigation} />
@@ -63,7 +60,7 @@ export default function Dashboard({ navigation }) {
                         style={styles.input}
                     />
                     <View style={styles.buttonContainer}>
-                        <Button title="Scan QR Code" onPress={() => navigation.navigate('Scanner')} />
+                        <Button title="Scan QR Code" onPress={() => navigation.navigate('Scaner')} />
                         <Button title="Search" onPress={fetchVenues} />
                     </View>
                 </View>

@@ -7,18 +7,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useUser } from './UserProvider';
 const Navbar = () => {
-    const { user, logoutUser } = useUser(); // Access user state and logoutUser function
+    const { user, logoutUser } = useUser();
     const navigation = useNavigation();
 
     const handleProfilePress = () => {
-        navigation.navigate('Profile'); // Navigate to the Profile screen
+        navigation.navigate('Profile');
     };
+    const handleNavigateCart = ()=>{
+        navigation.navigate('Cart');
+    }
     return (
         <View style={styles.navbar}>
             <TouchableOpacity onPress={handleProfilePress}>
                 <Text style={styles.username}>{user ? `Welcome, ${user.first_name}` : 'Welcome, Guest'}</Text>
             </TouchableOpacity>
-            <Button title="Logout" onPress={logoutUser} />
+            {/* <Button title="Logout" onPress={logoutUser} /> */}
+            <Button title="Cart" onPress={handleNavigateCart} />
         </View>
     );
 };

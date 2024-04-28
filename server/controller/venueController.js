@@ -64,7 +64,16 @@ const getVenueById = async (req, res) => {
     }
 }
 
+const getVenueAppById = async(req, res)=>{
+    const venueId = req.params.id;
+    try {
+        const venue = await Venue.findOne({_id: venueId})
+        return res.status(200).json({ status: "okay", venueInfo: venue });
 
+    } catch (error) {
+        return res.status(500).json({ message: "Internal server error" });
+    }
+}
 const updateVenue = async (req, res) => {
 
 }

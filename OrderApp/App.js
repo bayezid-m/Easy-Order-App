@@ -7,9 +7,11 @@ import Dashboard from './screens/Dashboard';
 import Register from './screens/Register';
 import Login from './screens/Login';
 import QrCoder from './screens/QrCoder';
-import AllRestaurant from './screens/AllRestaurant';
 import { UserProvider } from './components/UserProvider';
 import ProfileScreen from './screens/Profile';
+import Venue from './screens/Venue';
+import Cart from './screens/Cart';
+import Item from './screens/Item';
 
 const Stack = createStackNavigator();
 
@@ -23,7 +25,9 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Scaner" component={QrCoder} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
-          <Stack.Screen name="AllRestaurant" component={AllRestaurant} />
+          <Stack.Screen name="Venue" component={Venue} />
+          <Stack.Screen name="Cart" component={Cart} />
+          <Stack.Screen name="Item" component={Item} />
         </Stack.Navigator>
       </UserProvider>
     </NavigationContainer>

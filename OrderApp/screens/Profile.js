@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Button } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
 import { useUser } from '../components/UserProvider';
 
 const ProfileScreen = () => {
-    const { user } = useUser(); // Access user state
+    const { user, logoutUser } = useUser();
 
     return (
         <View style={styles.container}>
@@ -18,6 +18,7 @@ const ProfileScreen = () => {
                     <Text style={styles.email}>Email: {user ? user.email : '-'}</Text>
                 </View>
             </View>
+            <Button title="Logout" onPress={logoutUser} />
         </View>
     );
 };

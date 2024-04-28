@@ -1,4 +1,5 @@
 const Item = require("../model/itemModel");
+const Venue = require("../model/venueModel");
 
 const addItem = async (req, res) => {
     const user = req.user;
@@ -34,17 +35,32 @@ const getSingleitem = async (req, res) => {
 }
 
 const getItem = async (req, res) => {
-    const venue = req.query.venue;
+    // const venue = req.query.venue;
+    const result = req.query.venue
+        ? {
+            $or: [
+                { name: { $regex: req.query.venue, $options: "i" } },
+                { code: { $regex: req.query.venue, $options: "i" } },
+            ],
+        }
+        : {};
+    const venueInfo = await Venue.find(result)
+    //console.log( venueInfo.id )
+    const venuId = venueInfo[0]._id;
+    const items = await Item.find({ venue_id: venuId });
+    return res.status(200).json({ status: "okay", venue: venueInfo[0], items: items })
+
     //const name = req.query.name;
 
-    try {
-        const items = await Item.find({ venue_id: venue });
+    // try {
+    //     const items = await Item.find({ venue_id: venue });
+    //     const venueInfo = await Venue.findById({_id: venue})
+    //     return res.status(200).json({ status: "okay", items: items, venueInfo:  venueInfo});
 
-        return res.status(200).json({ status: "okay", items: items });
+    // } catch (error) {
+    //     return res.status(500).json({ status: "error", message: "Internal Server Error" });
+    // }
 
-    } catch (error) {
-        return res.status(500).json({ status: "error", message: "Internal Server Error" });
-    }
 }
 
 const updateItem = async (req, res) => {

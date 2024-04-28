@@ -19,7 +19,7 @@ export const UserProvider = ({ children }) => {
       try {
         const token = await AsyncStorage.getItem('token');
         if (token) {
-          const response = await axios.get("http://192.168.0.22:4040/api/v1/user/getUser", {
+          const response = await axios.get("http://192.168.162.89:4040/api/v1/user/getUser", {
             headers: {
               'access-token': token
             }

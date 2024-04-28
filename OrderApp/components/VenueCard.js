@@ -1,16 +1,24 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+// import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const VenueCard = ({ venue }) => {
+  const navigation = useNavigation();
+  const handlePress = () => {
+    // Navigate to the Venue screen with the venue.id parameter
+    navigation.navigate('Venue', { venueId: venue.name });
+  };
+
   return (
-    <View style={styles.card}>
+    <TouchableOpacity onPress={handlePress} style={styles.card}>
       <Image source={{ uri: venue.image }} style={styles.image} />
       <View style={styles.cardContent}>
         <Text style={styles.name}>{venue.name}</Text>
         <Text style={styles.location}>{venue.location}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const Item = new mongoose.Schema(
+const Order = new mongoose.Schema(
     {
         user_id: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
         venue_id: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Venue" },
@@ -13,9 +13,9 @@ const Item = new mongoose.Schema(
     {
         timestamps: true
     },
-    { collection: 'Item' }
+    { collection: 'Order' }
 )
 
-const model = mongoose.model('Item', Item)
+const model = mongoose.model('Order', Order)
 
 module.exports = model
