@@ -1,5 +1,5 @@
 const Order = require("../model/orderModel")
-const {emitOrderEvent} = require('../index')
+//const {emitOrderEvent} = require('../index')
 
 const addOrder = async (req, res) => {
     const user = req.user;
