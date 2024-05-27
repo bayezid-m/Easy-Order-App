@@ -20,7 +20,7 @@ const io = socketIo(server, {
 // socket io connection
 io.on('connection', (socket) => {
   console.log('A user connected');
-  
+
   socket.on('disconnect', () => {
     console.log('A user disconnected');
   });
@@ -58,22 +58,28 @@ app.use("/api/v1/order", orderRouter)
 app.use("/api/v1/chef", chefRouter)
 
 
-  
+
 //
+app.get('/', async (req, res) => {
+  return res.json({
+    "message": "Hi, I am from backend"
+  })
+})
+
 const HandleMongoDbConnect = async () => {
-    const mongoURL = process.env.database_URL;
-    try {
-        await mongoose.connect(mongoURL);
-        console.log('Database is connected successfully');
-    } catch (error) {
-        console.log(error);
-    }
+  const mongoURL = process.env.database_URL;
+  try {
+    await mongoose.connect(mongoURL);
+    console.log('Database is connected successfully');
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 
 server.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-    HandleMongoDbConnect();
+  console.log(`Server is running on http://localhost:${port}`);
+  HandleMongoDbConnect();
 });
 
 module.exports = { app, emitOrderEvent };
