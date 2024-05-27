@@ -13,13 +13,15 @@ export const useUser = () => {
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigation = useNavigation();
-
+  const [userCart, setUserCart] = useState([]);
+  const [userVenueId, setUserVenueId] = useState();
+  
   useEffect(() => {
     const getUser = async () => {
       try {
         const token = await AsyncStorage.getItem('token');
         if (token) {
-          const response = await axios.get("http://192.168.162.89:4040/api/v1/user/getUser", {
+          const response = await axios.get("http://192.168.54.253:4040/api/v1/user/getUser", {
             headers: {
               'access-token': token
             }
@@ -48,7 +50,7 @@ export const UserProvider = ({ children }) => {
 
 
   return (
-    <UserContext.Provider value={{ user, logoutUser }}>
+    <UserContext.Provider value={{ user, logoutUser, userCart, setUserCart, setUserVenueId, userVenueId }}>
       {children}
     </UserContext.Provider>
   );

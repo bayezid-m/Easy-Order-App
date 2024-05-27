@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Venue } from '../types/Venue'
 import AddItemModal from '../Modals/AddItemModal';
 import useAppDispatch from '../hooks/useAppDispatch';
-import { getItemOfVeneu } from '../redux/reducers/itemReducer';
+import { getItemForOwner } from '../redux/reducers/itemReducer';
 import QrModal from '../Modals/QrModal';
 
 interface VenueProfileProps {
@@ -19,12 +19,11 @@ const VenueProfile: React.FC<VenueProfileProps> = ({ venueInfo }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
   const dispatch = useAppDispatch();
-  console.log(_id)
-
+  
   useEffect(() => {
     if (_id) {
       console.log("call from venue profile")
-      dispatch(getItemOfVeneu(_id as string))
+      dispatch(getItemForOwner(_id as string))
     }
     //dispatch(getItemOfVeneu(_id as string))
 

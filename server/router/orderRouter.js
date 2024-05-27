@@ -7,6 +7,7 @@ router.use(express.json())
 const {
     addOrder,
     getOrder,
+    getOrderOfVenue,
     updateOrder,
     deleteOrder
 } = require("../controller/orderController")
@@ -14,6 +15,8 @@ const {
 
 router.route('/addOrder').post(authenticateToken, addOrder)
 router.route('/getOrder').get(authenticateToken, getOrder)
+router.route('/getOrder').get(authenticateToken, getOrder)
+router.get('/orderOfVenue/(:id)', getOrderOfVenue)
 router.put('/update/(:id)', updateOrder)
 router.route('/deleteOrder/(:id)').delete(authenticateToken, deleteOrder)
 

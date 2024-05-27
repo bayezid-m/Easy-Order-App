@@ -12,6 +12,7 @@ import ProfileScreen from './screens/Profile';
 import Venue from './screens/Venue';
 import Cart from './screens/Cart';
 import Item from './screens/Item';
+import OrderScreen from './screens/OrderScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ export default function App() {
           <Stack.Screen name="Venue" component={Venue} />
           <Stack.Screen name="Cart" component={Cart} />
           <Stack.Screen name="Item" component={Item} />
+          <Stack.Screen name="OrderScreen" component={OrderScreen} />
         </Stack.Navigator>
       </UserProvider>
     </NavigationContainer>

@@ -1,5 +1,5 @@
 const Order = require("../model/orderModel")
-
+const {emitOrderEvent} = require('../index')
 
 const addOrder = async (req, res) => {
     const user = req.user;
@@ -13,6 +13,7 @@ const addOrder = async (req, res) => {
             status: 0,
             quantity: req.body.quantity
         })
+        //emitOrderEvent('newOrder', newOrder);
         return res.status(201).json({ status: "okay", orderInfo: newOrder });
     } catch (error) {
         return res.status(500).json({ message: "Internal server error" });
@@ -23,8 +24,18 @@ const getOrder = async (req, res) => {
     const user = req.user;
 
     try {
-        const userOrder = await Order.find({ user_id: user._id });
+        const userOrder = await Order.find({ user_id: user._id }).populate('item_id');
         return res.status(200).json({ status: "okay", orders: userOrder });
+    } catch (error) {
+        return res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+const getOrderOfVenue = async(req, res)=>{
+    const venue_id = req.params.id;
+    try {
+        const venueOrders = await Order.find({venue_id: venue_id}).populate('item_id')
+        return res.status(200).json({ status: "okay", orders: venueOrders });
     } catch (error) {
         return res.status(500).json({ message: "Internal server error" });
     }
@@ -34,10 +45,11 @@ const getOrder = async (req, res) => {
 const updateOrder = async (req, res) => {
     const orderId = req.params.id;
     try {
-        const updatedOrder = await Order.updateOne({ _id: orderId }, {
+        const updatedOrder = await Order.findByIdAndUpdate({ _id: orderId }, {
             status: req.body.status,
         })
-        return res.status(200).json({ status: "okay" });
+        //emitOrderEvent('updateOrder', updatedOrder);
+        return res.status(200).json({ status: "okay", order: updatedOrder });
     } catch (error) {
         return res.status(500).json({ message: "Internal server error" });
     }
@@ -58,6 +70,7 @@ const deleteOrder = async (req, res) => {
 module.exports = {
     addOrder,
     getOrder,
+    getOrderOfVenue,
     updateOrder,
     deleteOrder
 }

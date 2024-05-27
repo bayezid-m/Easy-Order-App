@@ -19,7 +19,7 @@ import { User } from '../types/User';
 import { getVenueByToken } from '../redux/reducers/venueReducer';
 import CreateVenueModal from '../Modals/CreateVenueModal';
 import VenueProfile from '../components/VenueProfile'
-import { getItemOfVeneu } from '../redux/reducers/itemReducer';
+import { getItemForOwner } from '../redux/reducers/itemReducer';
 import ItemContainer from '../components/ItemContainer';
 
 const DashBoard = () => {
@@ -67,7 +67,7 @@ const DashBoard = () => {
   useEffect(()=>{
     if(token){
       if(venue!==null){
-        dispatch(getItemOfVeneu(venue._id as string))
+        dispatch(getItemForOwner(venue._id as string))
       }
     }  
   },[venue])
@@ -148,5 +148,6 @@ const DashBoard = () => {
     </div>
   );
 }
+
 
 export default DashBoard

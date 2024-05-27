@@ -22,7 +22,6 @@ const registerUser = async (req, res) => {
     }
 }
 const loginUser = async (req, res) => {
-    //console.log(req.body)
     const user = await User.findOne({
         email: req.body.email
     })
@@ -40,16 +39,18 @@ const loginUser = async (req, res) => {
                 email: user.email,
             },
             process.env.JWT_secret_token
-            //,{ expiresIn: '1h' }
+            ,{ expiresIn: '1h' }
         )
         return res.status(200).json({status: "okay", userInfo: user, token: token });
     } else {
         return res.status(500).json({status: "false", error: error });
     }
 }
+
 const getUser = async (req, res) => {
     return res.status(200).json({status: "okay", userInfo: req.user });
 }
+
 const updateUser = async (req, res) => {
     try {
         const user_id = req.params.id

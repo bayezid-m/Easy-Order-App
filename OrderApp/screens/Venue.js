@@ -4,17 +4,19 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
+import {useUser} from '../components/UserProvider';
 
 const Venue = ({ navigation }) => {
     const route = useRoute();
     const venueId = route.params?.venueId;
     const [venueItems, setVenueItems] = useState();
     const [venueInfo, setVenueInfo] = useState();
+    const {setUserVenueId} = useUser();
 
     useEffect(() => {
         const fetchItemsData = async () => {
             try {
-                const response = await axios.get(`http://192.168.162.89:4040/api/v1/item/getItem?venue=${venueId}`);
+                const response = await axios.get(`http://192.168.54.253:4040/api/v1/item/getItem?venue=${venueId}`);
                 setVenueItems(response.data.items);
             } catch (error) {
                 console.error('Error fetching venue information:', error.message);
@@ -22,8 +24,9 @@ const Venue = ({ navigation }) => {
         };
         const fetchVenueData = async () => {
             try {
-                const response = await axios.get(`http://192.168.162.89:4040/api/v1/item/getItem?venue=${venueId}`);
+                const response = await axios.get(`http://192.168.54.253:4040/api/v1/item/getItem?venue=${venueId}`);
                 setVenueInfo(response.data.venue);
+                setUserVenueId(response.data.venue._id);
             } catch (error) {
                 console.error('Error fetching venue information:', error.message);
             }
@@ -31,7 +34,7 @@ const Venue = ({ navigation }) => {
 
         fetchItemsData();
         fetchVenueData();
-    }, [venueId]);
+    }, [venueId, setUserVenueId]);
 
     const navigateToItemScreen = (item) => {
         navigation.navigate('Item', { item });

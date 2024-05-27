@@ -37,6 +37,7 @@ const QrModal: React.FC<ModalContentProps> = ({ qrOpen, onQrClose, code }) => {
             pdf.save("qr_code.pdf");
         });
     };
+    
     return (
         <Modal
             open={qrOpen}

@@ -18,9 +18,10 @@ const LoginScreen = ({ navigation }) => {
     checkToken();
   });
 
+  //192.168.54.253
   const loginUser = async () => {
     try {
-      const response = await axios.post('http://192.168.162.89:4040/api/v1/user/login', { email, password });
+      const response = await axios.post('http://192.168.54.253:4040/api/v1/user/login', { email, password });
       //console.log(response.data)
       const token = response.data.token;
       await AsyncStorage.setItem('token', token);

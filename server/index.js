@@ -5,6 +5,34 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 
 const port = process.env.PORT || 4040;
+
+//socket io
+const http = require('http');
+const socketIo = require('socket.io');
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST", "PUT"]
+  }
+});
+
+// socket io connection
+io.on('connection', (socket) => {
+  console.log('A user connected');
+  
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+});
+
+// Emit order events
+const emitOrderEvent = (event, data) => {
+  io.emit(event, data);
+};
+
+//
+
 //"http://localhost:4000"
 // app.use(cors({
 //     origin: ['http://localhost:8081'],
@@ -20,15 +48,19 @@ const userRouter = require("./router/userRoute")
 const venueRouter = require("./router/venueRoute")
 const itemRouter = require("./router/itemRouter")
 const orderRouter = require("./router/orderRouter")
+const chefRouter = require("./router/chefRouter")
 
 //using router inside app
 app.use("/api/v1/user", userRouter)
 app.use("/api/v1/venue", venueRouter)
 app.use("/api/v1/item", itemRouter)
 app.use("/api/v1/order", orderRouter)
+app.use("/api/v1/chef", chefRouter)
 
 
-const mongoDbConnect = async () => {
+  
+//
+const HandleMongoDbConnect = async () => {
     const mongoURL = process.env.database_URL;
     try {
         await mongoose.connect(mongoURL);
@@ -39,7 +71,9 @@ const mongoDbConnect = async () => {
 };
 
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
-    mongoDbConnect();
+    HandleMongoDbConnect();
 });
+
+module.exports = { app, emitOrderEvent };

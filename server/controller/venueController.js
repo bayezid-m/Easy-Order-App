@@ -1,6 +1,6 @@
 const Venue = require('../model/venueModel')
 
-function generateRandomString() {
+function generateRandomCode() {
     const length = 8;
     const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     let randomString = '';
@@ -9,7 +9,6 @@ function generateRandomString() {
         const randomIndex = Math.floor(Math.random() * characters.length);
         randomString += characters.charAt(randomIndex);
     }
-
     return randomString;
 }
 
@@ -18,7 +17,7 @@ const createVenue = async (req, res) => {
     const user = req.user;
     const image_url = "https://res.cloudinary.com/dv4j8hjqf/image/upload/v1689848305/" + req.body.image + ".jpg"
 
-    const randomString = generateRandomString();
+    const randomString = generateRandomCode();
 
 
     if (user.role === "owner") {

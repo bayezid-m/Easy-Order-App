@@ -3,8 +3,6 @@ const Venue = require("../model/venueModel");
 
 const addItem = async (req, res) => {
     const user = req.user;
-    console.log(req.body)
-    // const image_url = "https://res.cloudinary.com/dv4j8hjqf/image/upload/v1689848305/" + req.body.image + ".jpg"
     if (user.role === "owner") {
         try {
             const newItem = await Item.create({
@@ -21,7 +19,6 @@ const addItem = async (req, res) => {
     } else {
         return res.status(403).json({ message: 'User does not have permission.' });
     }
-
 }
 
 const getSingleitem = async (req, res) => {
@@ -34,8 +31,8 @@ const getSingleitem = async (req, res) => {
     }
 }
 
+
 const getItem = async (req, res) => {
-    // const venue = req.query.venue;
     const result = req.query.venue
         ? {
             $or: [
@@ -45,22 +42,20 @@ const getItem = async (req, res) => {
         }
         : {};
     const venueInfo = await Venue.find(result)
-    //console.log( venueInfo.id )
     const venuId = venueInfo[0]._id;
     const items = await Item.find({ venue_id: venuId });
     return res.status(200).json({ status: "okay", venue: venueInfo[0], items: items })
+}
 
-    //const name = req.query.name;
-
-    // try {
-    //     const items = await Item.find({ venue_id: venue });
-    //     const venueInfo = await Venue.findById({_id: venue})
-    //     return res.status(200).json({ status: "okay", items: items, venueInfo:  venueInfo});
-
-    // } catch (error) {
-    //     return res.status(500).json({ status: "error", message: "Internal Server Error" });
-    // }
-
+const getItemOfVenue = async(req,res)=>{
+     const venue = req.query.venue;
+    try {
+        const items = await Item.find({ venue_id: venue });
+        const venueInfo = await Venue.findById({_id: venue})
+        return res.status(200).json({ status: "okay", items: items, venueInfo:  venueInfo});
+    } catch (error) {
+        return res.status(500).json({ status: "error", message: "Internal Server Error" });
+    }
 }
 
 const updateItem = async (req, res) => {
@@ -80,6 +75,7 @@ const deleteItem = async (req, res) => {
 module.exports = {
     addItem,
     getItem,
+    getItemOfVenue,
     getSingleitem,
     updateItem,
     deleteItem

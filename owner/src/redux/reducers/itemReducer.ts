@@ -39,12 +39,26 @@ const initialState: {
 }
 
 
-export const getItemOfVeneu = createAsyncThunk(
-    'getItems',
-    async (venueId: string) => {
-        console.log(venueId)
+// export const getItemOfVeneu = createAsyncThunk(
+//     'getItems',
+//     async (venueId: string) => {
+//         //console.log(venueId)
+//         try {
+//             const item = await axios.get<Item>(`http://localhost:4040/api/v1/item/getItem?venue=${venueId}`)
+//             return item.data
+
+//         } catch (e) {
+//             const error = e as AxiosError;
+//             return error;
+//         }
+//     }
+// )
+
+export const getItemForOwner = createAsyncThunk(
+    'getItemForOwner',
+    async (venueId: string)=>{
         try {
-            const item = await axios.get<Item>(`http://localhost:4040/api/v1/item/getItem?venue=${venueId}`)
+            const item = await axios.get<Item>(`http://localhost:4040/api/v1/item/getItemOfVenue?venue=${venueId}`)
             return item.data
 
         } catch (e) {
@@ -69,7 +83,7 @@ export const addItem = createAsyncThunk(
     'addItem',
     async ({ itemData }: { itemData: NewItem }) => {
         const token = localStorage.getItem('token')
-        console.log(itemData)
+        //console.log(itemData)
         try {
             const result = await axios.post<NewItem>('http://localhost:4040/api/v1/item/addItem', itemData, {
                 headers: {
@@ -111,7 +125,15 @@ const itmeSlice = createSlice({
     reducers: {},
     extraReducers: (build) => {
         build
-            .addCase(getItemOfVeneu.fulfilled, (state, action) => {
+            // .addCase(getItemOfVeneu.fulfilled, (state, action) => {
+            //     if (action.payload instanceof AxiosError) {
+            //         state.error = action.payload.message
+            //     } else {
+            //         state.item = action.payload;
+            //     }
+            //     state.loading = false
+            // })
+            .addCase(getItemForOwner.fulfilled, (state, action) => {
                 if (action.payload instanceof AxiosError) {
                     state.error = action.payload.message
                 } else {

@@ -6,14 +6,32 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Navbar from '../components/Navbar';
 import VenueCard from '../components/VenueCard';
 import axios from 'axios';
+import { useUser } from '../components/UserProvider';
 
 export default function Dashboard({ navigation }) {
     const [venues, setVenues] = useState([]);
     const [inputText, setInputText] = useState('');
+    const { userCart, setUserCart } = useUser();
 
+    useEffect(() => {
+        // Load cart items from local storage on component mount
+        const loadCartFromStorage = async () => {
+            try {
+                const cartFromStorage = await AsyncStorage.getItem('userCart');
+                if (cartFromStorage !== null) {
+                    setUserCart(JSON.parse(cartFromStorage));
+                }
+            } catch (error) {
+                console.error('Error loading cart from storage:', error);
+            }
+        };
+
+        loadCartFromStorage();
+    }, [setUserCart]);
+    
     const fetchVenues = async (searchQuery) => {
         try {
-            const response = await axios.get('http://192.168.162.89:4040/api/v1/venue/getVenue', {
+            const response = await axios.get('http://192.168.54.253:4040/api/v1/venue/getVenue', {
                 params: {
                     search: searchQuery,
                 },
@@ -36,10 +54,10 @@ export default function Dashboard({ navigation }) {
         setInputText('');
     }, [navigation]);
 
+    
     useEffect(() => {
         //
         fetchVenues(inputText);
-        setInputText('');
     }, [inputText]);
 
     const [isScanning, setScanning] = useState(false);

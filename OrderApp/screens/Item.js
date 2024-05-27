@@ -1,11 +1,42 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import Navbar from '../components/Navbar';
+import { useUser } from '../components/UserProvider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Item = ({ route, navigation }) => {
     const { item } = route.params;
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const { userCart, setUserCart } = useUser();
+
+    useEffect(() => {
+        // Load cart items from local storage on component mount
+        const loadCartFromStorage = async () => {
+            try {
+                const cartFromStorage = await AsyncStorage.getItem('userCart');
+                if (cartFromStorage !== null) {
+                    setUserCart(JSON.parse(cartFromStorage));
+                }
+            } catch (error) {
+                console.error('Error loading cart from storage:', error);
+            }
+        };
+
+        loadCartFromStorage();
+    }, [setUserCart]);
+
+    useEffect(() => {
+        // Save cart items to local storage whenever userCart changes
+        const saveCartToStorage = async () => {
+            try {
+                await AsyncStorage.setItem('userCart', JSON.stringify(userCart));
+            } catch (error) {
+                console.error('Error saving cart to storage:', error);
+            }
+        };
+        saveCartToStorage();
+    }, [userCart]);
 
     const nextImage = () => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % item.image.length);
@@ -14,6 +45,10 @@ const Item = ({ route, navigation }) => {
     const prevImage = () => {
         setCurrentImageIndex((prevIndex) => (prevIndex - 1 + item.image.length) % item.image.length);
     };
+
+    const addtoCartHandler = () => {
+        setUserCart((prevCart) => [...prevCart, item._id]);
+    }
 
     return (
         <View style={styles.outerContainer}>
@@ -29,6 +64,7 @@ const Item = ({ route, navigation }) => {
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.description}>{item.description}</Text>
                 <Text style={styles.price}>Price: {item.price}€</Text>
+                <Button title="Add to cart" onPress={addtoCartHandler} />
             </View>
         </View>
     );
