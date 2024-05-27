@@ -8,29 +8,29 @@ require('dotenv').config()
 const port = 2000;
 
 //socket io
-const http = require('http');
-const socketIo = require('socket.io');
-const server = http.createServer(app);
-const io = socketIo(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST", "PUT"]
-  }
-});
+// const http = require('http');
+// const socketIo = require('socket.io');
+// const server = http.createServer(app);
+// const io = socketIo(server, {
+//   cors: {
+//     origin: "*",
+//     methods: ["GET", "POST", "PUT"]
+//   }
+// });
 
-// socket io connection
-io.on('connection', (socket) => {
-  console.log('A user connected');
+// // socket io connection
+// io.on('connection', (socket) => {
+//   console.log('A user connected');
 
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
-  });
-});
+//   socket.on('disconnect', () => {
+//     console.log('A user disconnected');
+//   });
+// });
 
-// Emit order events
-const emitOrderEvent = (event, data) => {
-  io.emit(event, data);
-};
+// // Emit order events
+// const emitOrderEvent = (event, data) => {
+//   io.emit(event, data);
+// };
 
 //
 
@@ -40,6 +40,7 @@ const emitOrderEvent = (event, data) => {
 //     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 //     allowedHeaders: ['Content-Type', 'Authorization'],
 // }));
+
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
