@@ -4,7 +4,8 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 require('dotenv').config()
 
-const port = process.env.PORT || 4040;
+//const port = process.env.PORT || 4040;
+const port = 4040;
 
 //socket io
 const http = require('http');
@@ -60,7 +61,7 @@ app.use("/api/v1/chef", chefRouter)
 
 
 //
-server.get('/', async (req, res) => {
+app.get('/', async (req, res) => {
   return res.json({
     "message": "Hi, I am from backend"
   })
