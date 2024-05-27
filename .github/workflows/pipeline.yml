@@ -30,6 +30,8 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Pull server image from docker hub
-        run: docker pull ctbama/server-ec2:latest 
+        run: docker pull ctbama/server-ec2:latest
+      - name: Delete old server container
+        run: docker rm -f server-app-container 
       - name: Run Docker server Container
         run: docker run -d -p 4040:4040 --name server-app-container -e DB_URL='${{ secrets.DB_URL }}' ctbama/server-ec2
