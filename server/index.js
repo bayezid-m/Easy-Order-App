@@ -60,7 +60,7 @@ app.use("/api/v1/chef", chefRouter)
 
 
 //
-app.get('/', async (req, res) => {
+server.get('/', async (req, res) => {
   return res.json({
     "message": "Hi, I am from backend"
   })
